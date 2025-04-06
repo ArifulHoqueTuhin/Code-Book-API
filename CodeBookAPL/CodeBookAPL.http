@@ -1,0 +1,6 @@
+@CodeBookAPL_HostAddress = http://localhost:5056
+
+GET {{CodeBookAPL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
