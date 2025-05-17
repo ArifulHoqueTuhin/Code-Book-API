@@ -1,12 +1,28 @@
-using CodeBookAPL.Models;
+﻿using CodeBookAPL.Models;
 using CodeBookAPL.Repository.IRepository;
 using CodeBookAPL.Repository;
 using Microsoft.EntityFrameworkCore;
 using CodeBookAPL;
 
-var builder = WebApplication.CreateBuilder(args);
+//var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    // ✅ Bind to the Render-provided PORT
+    ApplicationName = typeof(Program).Assembly.FullName,
+    WebRootPath = "wwwroot",
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
+
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(Int32.Parse(port));
+});
+
+//Add services to the container.
 
 builder.Services.AddControllers();
 
